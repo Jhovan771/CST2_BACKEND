@@ -6,6 +6,7 @@ const {
   updateStudent,
   deleteStudent,
   fetchStudentsWithoutActivityScore,
+  fetchNumberOfStudents,
 } = require("../controllers/studentController");
 const authenticateToken = require("../middleware/authMiddleware");
 
@@ -14,5 +15,6 @@ router.get("/students", authenticateToken, fetchStudentByTeacherId);
 router.put("/student/:id", authenticateToken, updateStudent);
 router.delete("/delete/:id", authenticateToken, deleteStudent);
 router.get("/no-score", authenticateToken, fetchStudentsWithoutActivityScore);
+router.get("/number-of-students", authenticateToken, fetchNumberOfStudents);
 
 module.exports = router;

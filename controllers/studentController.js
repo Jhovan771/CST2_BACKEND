@@ -51,6 +51,7 @@ exports.addStudent = (req, res) => {
   );
 };
 
+// ============================================= >
 exports.fetchStudentByTeacherId = (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
 
@@ -82,6 +83,7 @@ exports.fetchStudentByTeacherId = (req, res) => {
   });
 };
 
+// ============================================= >
 exports.updateStudent = (req, res) => {
   const {
     first_name,
@@ -152,6 +154,7 @@ exports.updateStudent = (req, res) => {
   );
 };
 
+// ============================================= >
 exports.deleteStudent = (req, res) => {
   const studentId = req.params.id;
   const teacher_id = req.user?.teacher_id;
@@ -183,9 +186,9 @@ exports.deleteStudent = (req, res) => {
   });
 };
 
-// FETCH STUDENT WITHOUT ACTIVITY SCORE
+// ============================================= >
 exports.fetchStudentsWithoutActivityScore = (req, res) => {
-  const { activity_id } = req.query; // Get activity_id from query parameters
+  const { activity_id } = req.query;
   const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {
@@ -221,5 +224,25 @@ exports.fetchStudentsWithoutActivityScore = (req, res) => {
         });
       }
     });
+  });
+};
+
+// ============================================= >
+exports.fetchNumberOfStudents = (req, res) => {
+  const teacherId = req.user.teacher_id;
+
+  const query = `
+    SELECT COUNT(*) AS student_count
+    FROM student_record
+    WHERE teacher_id = ?;
+  `;
+
+  db.query(query, [teacherId], (err, results) => {
+    if (err) {
+      console.error("Database error:", err);
+      return res.status(500).json({ message: "Database error", error: err });
+    }
+
+    res.status(200).json(results[0]);
   });
 };
