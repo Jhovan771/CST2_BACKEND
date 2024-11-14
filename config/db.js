@@ -1,10 +1,10 @@
 const mysql2 = require("mysql2");
 
 const db = mysql2.createPool({
-  host: "localhost",
-  user: "root",
-  password: "01.God_is_Able",
-  database: "cst2_db",
+  host: DB_HOST,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_NAME,
 });
 
 db.getConnection((err, connection) => {
