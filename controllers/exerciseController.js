@@ -84,6 +84,7 @@ exports.getAllActivities = (req, res) => {
 
 // ============================================= >
 exports.submitActivityScore = (req, res) => {
+  console.log("Received request body:", req.body); // Add this line
   const { id, activity_id, score, completed } = req.body;
 
   // Check for missing required fields and score value
@@ -97,9 +98,9 @@ exports.submitActivityScore = (req, res) => {
   }
 
   const query = `
-    INSERT INTO student_activity_record (id, act_id, score, completed)
-    VALUES (?, ?, ?, ?)
-    ON DUPLICATE KEY UPDATE score = ?, completed = ?`;
+        INSERT INTO student_activity_record (id, act_id, score, completed)
+        VALUES (?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE score = ?, completed = ?`;
 
   db.query(
     query,
@@ -114,6 +115,7 @@ exports.submitActivityScore = (req, res) => {
     }
   );
 };
+
 // ============================================= >
 exports.discardStudentFromActivity = (req, res) => {
   const { student_id, activity_id } = req.body;
